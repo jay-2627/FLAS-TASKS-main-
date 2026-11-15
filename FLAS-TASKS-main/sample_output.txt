@@ -1,0 +1,14 @@
+LoopGuard - infinite-loop detection within the limits of computability
+======================================================================================================================
+loop                          verdict      check             reason
+----------------------------------------------------------------------------------------------------------------------
+L1 bounded for-loop           TERMINATES   syntactic bound   fixed bound: range(1000) runs exactly 1000 iterations
+L2 countdown by 3             TERMINATES   linear ranking    ranking function r = x - c drops by 3 per iteration; exits after 4 iterations
+L3 wrong direction            LOOPS        linear ranking    'x' moves away from the bound (d = +1), so the guard stays true forever
+L4 forgotten update           LOOPS        linear ranking    'i' never changes inside the loop, so the guard stays true forever
+L5 binary search (bug)        LOOPS        cycle detection   state repeated: iteration 2 = iteration 3 (cycle length 1)
+L6 binary search (fixed)      TERMINATES   bounded run       loop exited after 2 iterations
+L7 traffic-light controller   LOOPS        cycle detection   state repeated: iteration 0 = iteration 3 (cycle length 3)
+L8 skip zero, 16-bit          LOOPS        cycle detection   state repeated: iteration 0 = iteration 32768 (cycle length 32768)
+L9 skip zero, unbounded       UNKNOWN      step budget       no exit and no repeated state within 100,000 iterations
+L10 odd perfect number        UNKNOWN      step budget       no exit and no repeated state within 5,000 iterations
